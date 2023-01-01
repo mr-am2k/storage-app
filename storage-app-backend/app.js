@@ -4,6 +4,8 @@ const cors = require('cors')
 const client = require('./db/database')
 const app = express();
 
+const employeeRouter = require('./routes/employeeRoute')
+
 app.use(express.json());
 
 app.use(cors({
@@ -13,6 +15,9 @@ app.use(cors({
     credentials: true, //access-control-allow-credentials:true
     optionSuccessStatus: 200,
 }));
+
+//router
+app.use('/api/v1/employee', employeeRouter)
 
 const port = 3000;
 
