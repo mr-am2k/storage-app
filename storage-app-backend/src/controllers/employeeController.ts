@@ -1,9 +1,9 @@
+import { StatusCodes } from 'http-status-codes';
 
-const { StatusCodes } = require('http-status-codes')
-const client = require("../db/database");
-const bcrypt = require('bcrypt');
+import client from '../db/database.js';
+import bcrypt from 'bcrypt'
 
-const addEmployee = async (req, res) => {
+const addEmployee = async (req:any, res:any) => {
     try {
         const sentEmployee = req.body;
 
@@ -28,8 +28,8 @@ const addEmployee = async (req, res) => {
 
         res.status(StatusCodes.CREATED).json({ employeeResponse, userResponse });
     } catch (error) {
-        console.error(error.message);
+        res.status(StatusCodes.BAD_REQUEST).json({message: 'Input data invalid', timestamp: new Date()})
     }
 }
 
-module.exports = { addEmployee }
+export default addEmployee;
