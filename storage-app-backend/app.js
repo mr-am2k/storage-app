@@ -1,10 +1,10 @@
-require('dotenv').config();
-const express = require('express');
+const express = require('express')
 const cors = require('cors')
 const client = require('./db/database')
+
 const app = express();
 
-const employeeRouter = require('./routes/employeeRoute')
+const employeeRouter = require('./routes/employeeRoute.js')
 
 app.use(express.json());
 
@@ -13,7 +13,6 @@ app.use(cors({
     methods: '*',
     allowedHeaders: '*',
     credentials: true, //access-control-allow-credentials:true
-    optionSuccessStatus: 200,
 }));
 
 //router

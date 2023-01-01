@@ -20,6 +20,24 @@ const addEmployee = async (req, res) => {
             return res.status(StatusCodes.BAD_REQUEST).json({ message: "Invalid input data", timestamp: new Date() });
         }
 
+        const userExists = await client.query(
+            'SELECT COUNT(*) FROM employees WHERE email = $1',
+            [sentEmployee.email]
+        )
+
+        if(userExists.rows[0].count > 0){
+            return res.status(StatusCodes.BAD_REQUEST).json({ message: "Employee already exists with email: " + sentEmployee.email, timestamp: new Date() });
+        }
+
+        const usernameExists = await client.query(
+            'SELECT COUNT(*) FROM users WHERE username = $1',
+            [sentEmployee.username]
+        )
+
+        if(usernameExists.rows[0].count > 0){
+            return res.status(StatusCodes.BAD_REQUEST).json({ message: "User already exists with username: " + sentEmployee.username, timestamp: new Date() });
+        }
+
         const salt = await bcrypt.genSalt(10)
 
         const employeePassword = await bcrypt.hash(sentEmployee.password, salt)
