@@ -2,22 +2,16 @@
 const { StatusCodes } = require('http-status-codes')
 const client = require("../db/database");
 const bcrypt = require('bcrypt');
+const { validationResult } = require("express-validator")
 
 const addEmployee = async (req, res) => {
+    const errors = validationResult(req)
     try {
         const sentEmployee = req.body;
 
-        if (
-            sentEmployee.firstName === undefined ||
-            sentEmployee.lastName === undefined ||
-            sentEmployee.phoneNumber === undefined ||
-            sentEmployee.address === undefined ||
-            sentEmployee.email === undefined ||
-            sentEmployee.employmentDate === undefined ||
-            sentEmployee.username === undefined ||
-            sentEmployee.password === undefined
+        if (!errors.isEmpty()
         ) {
-            return res.status(StatusCodes.BAD_REQUEST).json({ message: "Invalid input data", timestamp: new Date() });
+            return res.status(StatusCodes.UNPROCESSABLE_ENTITY).json({ errors: errors.array() });
         }
 
         const userExists = await client.query(
@@ -25,7 +19,7 @@ const addEmployee = async (req, res) => {
             [sentEmployee.email]
         )
 
-        if(userExists.rows[0].count > 0){
+        if (userExists.rows[0].count > 0) {
             return res.status(StatusCodes.BAD_REQUEST).json({ message: "Employee already exists with email: " + sentEmployee.email, timestamp: new Date() });
         }
 
@@ -34,7 +28,7 @@ const addEmployee = async (req, res) => {
             [sentEmployee.username]
         )
 
-        if(usernameExists.rows[0].count > 0){
+        if (usernameExists.rows[0].count > 0) {
             return res.status(StatusCodes.BAD_REQUEST).json({ message: "User already exists with username: " + sentEmployee.username, timestamp: new Date() });
         }
 

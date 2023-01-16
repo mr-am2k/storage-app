@@ -18,7 +18,7 @@ app.use(cors({
 //router
 app.use('/api/v1/employee', employeeRouter)
 
-const port = 3000;
+const port = 8080;
 
 const start = async () => {
     try {
