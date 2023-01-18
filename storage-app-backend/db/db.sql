@@ -34,3 +34,16 @@ CREATE TABLE suppliers (
 	start_date DATE NOT NULL,
 	end_date DATE NULL
 )
+
+--Creating table for materials 
+CREATE TABLE materials (
+	id INT PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
+	name VARCHAR(255) NOT NULL,
+	amount INT NOT NULL,
+	min_amount INT NOT NULL,
+	price DOUBLE PRECISION NOT NULL,
+	unit_of_measure VARCHAR(255) NOT NULL,
+	used BOOLEAN NOT NULL,
+	supplier_id INT,
+	FOREIGN KEY (supplier_id) REFERENCES suppliers(id)
+)

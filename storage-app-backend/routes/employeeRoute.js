@@ -18,7 +18,7 @@ router
   .route('/:employeeId')
   .get(verifyJWT, verifyRole(ROLES_LIST.User, ROLES_LIST.Admin), getEmployee);
 
-router.route('/update/:employeeId').put(
+router.route('/:employeeId').put(
   verifyJWT,
   verifyRole(ROLES_LIST.Admin),
   body('firstName')
@@ -69,7 +69,7 @@ router.route('/update/:employeeId').put(
   updateEmployee
 );
 
-router.route('/add').post(
+router.route('/').post(
   verifyJWT,
   verifyRole(ROLES_LIST.Admin),
   body('firstName')

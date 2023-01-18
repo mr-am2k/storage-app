@@ -86,6 +86,13 @@ const getSupplier = async (req, res) => {
   }
 };
 const updateSupplier = async (req, res) => {
+  const errors = validationResult(req);
+
+  if (!errors.isEmpty()) {
+    return res
+      .status(StatusCodes.UNPROCESSABLE_ENTITY)
+      .json({ errors: errors.array() });
+  }
   const supplierId = req.params.supplierId;
 
   try {

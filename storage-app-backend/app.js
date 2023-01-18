@@ -10,6 +10,7 @@ const authRouter = require('./routes/authRoute');
 const refreshRouter = require('./routes/refreshRoute');
 const userRouter = require('./routes/userRoute');
 const supplierRouter = require('./routes/supplierRoute')
+const materialRouter = require('./routes/materialRoute')
 
 app.use(express.json());
 
@@ -26,10 +27,11 @@ app.use(
 
 //router
 app.use('/api/v1/auth/', authRouter);
-app.use('/api/v1/refresh', refreshRouter);
+app.use('/api/v1/refresh-token', refreshRouter);
 app.use('/api/v1/employee', employeeRouter);
 app.use('/api/v1/users', userRouter);
 app.use('/api/v1/suppliers', supplierRouter)
+app.use('/api/v1/materials', materialRouter)
 
 const port = 8080;
 
