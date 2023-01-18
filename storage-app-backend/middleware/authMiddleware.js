@@ -4,7 +4,7 @@ const jwt = require('jsonwebtoken');
 require('dotenv').config();
 
 const verifyJWT = (req, res, next) => {
-  const authHeader = req.headers['authorization'];
+  const authHeader = req.headers.authorization || req.headers.Authorization;
 
   if (!authHeader) {
     return res
@@ -20,7 +20,8 @@ const verifyJWT = (req, res, next) => {
         .status(StatusCodes.FORBIDDEN)
         .json({ message: 'Forbidden access' });
     }
-    req.user = decoded.username;
+    req.user = decoded.user.username;
+    req.role = decoded.user.role;
     next();
   });
 };

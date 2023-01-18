@@ -14,7 +14,7 @@ const generateRefreshToken = async (req, res) => {
 
   const refreshToken = cookies.jwt;
 
-  const username = jwt.decode(refreshToken).username.username;
+  const username = jwt.decode(refreshToken).username;
 
   const foundUser = await client.query(
     'SELECT * FROM users WHERE username = $1',
@@ -28,13 +28,13 @@ const generateRefreshToken = async (req, res) => {
   }
 
   jwt.verify(refreshToken, process.env.REFRESH_TOKEN_SECRET, (err, decoded) => {
-    if (err || foundUser.rows[0].username !== decoded.username.username) {
+    if (err || foundUser.rows[0].username !== decoded.username) {
       return res
         .status(StatusCodes.FORBIDDEN)
         .json({ message: 'Forbidden access!' });
     }
     const accessToken = jwt.sign(
-      { username: decoded.username },
+      { user: { username: decoded.username, role: foundUser.rows[0].role } },
       process.env.ACCESS_TOKEN_SECRET,
       {
         expiresIn: '10000s',

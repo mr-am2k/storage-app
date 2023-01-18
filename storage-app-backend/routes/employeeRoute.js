@@ -2,11 +2,14 @@ const express = require('express');
 const { addEmployee } = require('../controllers/employeeController.js');
 const { body } = require('express-validator');
 const verifyJWT = require('../middleware/authMiddleware.js');
+const ROLES_LIST = require('../config/roles_list.js');
+const verifyRole = require('../middleware/roleMiddleware.js');
 
 const router = express.Router();
 
 router.route('/add').post(
   verifyJWT,
+  verifyRole(ROLES_LIST.User, ROLES_LIST.Admin),
   body('firstName')
     .not()
     .isEmpty()
