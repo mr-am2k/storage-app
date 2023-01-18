@@ -16,7 +16,7 @@ router.route('/').get(verifyJWT, verifyRole(ROLES_LIST.Admin), getEmployees);
 
 router
   .route('/:employeeId')
-  .get(verifyJWT, verifyRole(ROLES_LIST.Admin), getEmployee);
+  .get(verifyJWT, verifyRole(ROLES_LIST.User, ROLES_LIST.Admin), getEmployee);
 
 router.route('/update/:employeeId').put(
   verifyJWT,

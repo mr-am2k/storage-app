@@ -19,10 +19,25 @@ const login = async (req, res) => {
     [username]
   );
 
-  if (!foundUser.rows[0]) {
-    res
+  const foundUserData = foundUser.rows[0]
+
+  console.log(foundUserData)
+
+  if (!foundUserData) {
+    return res
       .status(StatusCodes.NOT_FOUND)
       .json({ message: 'There is no user with this username' });
+  }
+
+  const foundEmployee = await client.query(
+    'SELECT * FROM employees WHERE id = $1',
+    [foundUserData.employee_id]
+  );
+
+  if (foundEmployee.rows[0].dismissal_date !== null) {
+    return res
+      .status(StatusCodes.BAD_REQUEST)
+      .json({ message: 'You are fired' });
   }
 
   const match = await bcrypt.compare(password, foundUser.rows[0].password);
