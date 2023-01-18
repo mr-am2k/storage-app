@@ -21,3 +21,16 @@ CREATE TABLE users (
         password VARCHAR(255 NOT NULL,,
         role VARCHAR(255) NOT NULL
 );
+
+--Creating table for suppliers 
+CREATE TABLE suppliers (
+	id INT PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
+	name VARCHAR(255) NOT NULL,
+	uid VARCHAR(255) NOT NULL,
+	pdv VARCHAR(255) NOT NULL,
+	phone_number VARCHAR(255) NOT NULL,
+	contact_person VARCHAR(255) NOT NULL,
+	email VARCHAR(255) NOT NULL,
+	start_date DATE NOT NULL,
+	end_date DATE NULL
+)
