@@ -21,8 +21,6 @@ const login = async (req, res) => {
 
   const foundUserData = foundUser.rows[0]
 
-  console.log(foundUserData)
-
   if (!foundUserData) {
     return res
       .status(StatusCodes.NOT_FOUND)

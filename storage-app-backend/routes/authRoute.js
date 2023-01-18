@@ -12,7 +12,7 @@ router
       .not()
       .isEmpty()
       .trim()
-      .withMessage('Last name is required'),
+      .withMessage('Password is required'),
     login
   );
 

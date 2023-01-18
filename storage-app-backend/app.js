@@ -8,6 +8,7 @@ const app = express();
 const employeeRouter = require('./routes/employeeRoute.js');
 const authRouter = require('./routes/authRoute');
 const refreshRouter = require('./routes/refreshRoute');
+const userRouter = require('./routes/userRoute');
 
 app.use(express.json());
 
@@ -26,6 +27,7 @@ app.use(
 app.use('/api/v1/auth/', authRouter);
 app.use('/api/v1/refresh', refreshRouter);
 app.use('/api/v1/employee', employeeRouter);
+app.use('/api/v1/users', userRouter);
 
 const port = 8080;
 
