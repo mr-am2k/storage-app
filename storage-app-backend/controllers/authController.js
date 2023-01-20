@@ -19,12 +19,12 @@ const login = async (req, res) => {
     [username]
   );
 
-  const foundUserData = foundUser.rows[0]
+  const foundUserData = foundUser.rows[0];
 
   if (!foundUserData) {
     return res
       .status(StatusCodes.NOT_FOUND)
-      .json({ message: 'There is no user with this username' });
+      .json({ message: 'There is no user with this username: ' + username});
   }
 
   const foundEmployee = await client.query(
@@ -50,7 +50,7 @@ const login = async (req, res) => {
       },
       process.env.ACCESS_TOKEN_SECRET,
       {
-        expiresIn: '10000s',
+        expiresIn: '1h',
       }
     );
 
@@ -64,14 +64,12 @@ const login = async (req, res) => {
       }
     );
 
-    res.cookie('jwt', refreshToken, {
-      httpOnly: true,
-      sameSite: 'None',
-      //secure: true, - enable later
-      maxAge: 24 * 60 * 60 * 1000,
-    });
+    const user = {
+      username: foundUser.rows[0].username,
+      role: foundUser.rows[0].role,
+    };
 
-    res.status(StatusCodes.OK).json({ accessToken });
+    res.status(StatusCodes.OK).json({ accessToken, refreshToken, user });
   } else {
     res.status(StatusCodes.UNAUTHORIZED).json({ message: 'Wrong password' });
   }

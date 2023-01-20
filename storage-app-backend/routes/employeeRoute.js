@@ -3,7 +3,7 @@ const {
   addEmployee,
   getEmployees,
   getEmployee,
-  updateEmployee
+  updateEmployee,
 } = require('../controllers/employeeController.js');
 const { body } = require('express-validator');
 const verifyJWT = require('../middleware/authMiddleware.js');
@@ -113,7 +113,9 @@ router.route('/').post(
     .withMessage('Password is required')
     .isLength({ min: 8 })
     .withMessage('Password must be at least 8 characters long')
-    .matches(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$/, 'i')
+    .matches(
+      /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/
+    )
     .withMessage(
       'Password must contain at least one lowercase letter, one uppercase letter and one number.'
     ),

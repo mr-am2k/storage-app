@@ -9,6 +9,10 @@ const addEmployee = async (req, res) => {
   try {
     const sentEmployee = req.body;
 
+    console.log(sentEmployee)
+
+    console.log(errors)
+
     if (!errors.isEmpty()) {
       return res
         .status(StatusCodes.UNPROCESSABLE_ENTITY)
@@ -83,9 +87,14 @@ const getEmployees = async (req, res) => {
       'SELECT * FROM employees e INNER JOIN users u ON u.employee_id = e.id'
     );
 
-    const listOfEmployees = [...fetchedEmployees.rows];
+    let listOfEmployees = [...fetchedEmployees.rows];
 
-    res.status(StatusCodes.OK).json({ listOfEmployees });
+    listOfEmployees = listOfEmployees.map(employee => {
+      delete employee.password;
+      return employee;
+    });
+
+    res.status(StatusCodes.OK).json([...listOfEmployees]);
   } catch (error) {
     res.status(StatusCodes.BAD_REQUEST).json({ message: error });
   }
@@ -100,7 +109,9 @@ const getEmployee = async (req, res) => {
       [employeeId]
     );
 
-    const requestedEmployee = fetchedEmployees.rows[0];
+    let requestedEmployee = fetchedEmployees.rows[0];
+
+    delete requestedEmployee.password;
 
     if (!requestedEmployee) {
       return res

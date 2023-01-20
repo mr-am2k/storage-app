@@ -6,13 +6,11 @@ const jwt = require('jsonwebtoken');
 require('dotenv').config();
 
 const generateRefreshToken = async (req, res) => {
-  const cookies = req.cookies;
-
-  if (!cookies?.jwt) {
-    return res.status(StatusCodes.UNAUTHORIZED).json({ message: 'Bad cookie' });
+  if (!req.headers.authorizationrefresh) {
+    return res.status(StatusCodes.BAD_REQUEST);
   }
 
-  const refreshToken = cookies.jwt;
+  const refreshToken = req.headers.authorizationrefresh.split(' ')[1];
 
   const username = jwt.decode(refreshToken).username;
 
@@ -37,7 +35,7 @@ const generateRefreshToken = async (req, res) => {
       { user: { username: decoded.username, role: foundUser.rows[0].role } },
       process.env.ACCESS_TOKEN_SECRET,
       {
-        expiresIn: '10000s',
+        expiresIn: '1h',
       }
     );
     res.json({ accessToken });
