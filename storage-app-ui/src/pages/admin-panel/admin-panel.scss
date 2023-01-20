@@ -1,0 +1,9 @@
+@import '/src/scss/variables';
+@import '/src/scss//mixin';
+
+.c-admin-panel-wrapper{
+    @include flexDisplay(flex-start, center);
+    flex-direction: column;
+    font-family: $latoFont;
+    margin-top: 0.5rem;
+}

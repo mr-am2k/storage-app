@@ -1,0 +1,13 @@
+@import '/src/scss/variables';
+@import '/src/scss//mixin';
+
+table{
+    margin-top: 2rem;
+    width: 100%;
+    border: 1px solid $blackColor;
+    font-size: 0.8rem;
+}
+
+h4{
+    margin-top: 2rem;
+}

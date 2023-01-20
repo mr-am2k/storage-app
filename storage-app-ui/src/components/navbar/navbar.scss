@@ -1,0 +1,16 @@
+@import '/src/scss/variables';
+@import '/src/scss//mixin';
+
+.c-navbar-wrapper {
+  @include flexDisplay(flex-end, center);
+  width: 100%;
+  height: 3rem;
+  padding: 0 5rem;
+  font-family: $latoFont;
+  gap: 20px;
+
+  a{
+    text-decoration: none;
+    color: $blackColor;
+  }
+}

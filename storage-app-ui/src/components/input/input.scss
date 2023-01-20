@@ -1,0 +1,57 @@
+@import '/src/scss/variables';
+@import '/src/scss//mixin';
+
+.c-text-input {
+  @include flexDisplay(center, center);
+  flex-direction: column;
+  font-family: $latoFont;
+  width: 300px;
+  margin-bottom: 0.5rem;
+
+  .c-header-text {
+    color: $darkBlackColor;
+    font-size: 18px;
+  }
+
+  input {
+    width: 250px;
+    padding: 6px 42px 6px 24px;
+    gap: 10px;
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+    background: $lightGreyColor;
+    border: 1px solid $borderGreyColor;
+    outline: none;
+    color: $blackColor;
+    font-family: $latoFont;
+    font-weight: $fontNormal;
+    font-size: 18px;
+    line-height: 27px;
+
+    &::-webkit-outer-spin-button,
+    &::-webkit-inner-spin-button {
+      -webkit-appearance: none;
+      margin: 0;
+    }
+
+    &::placeholder {
+      color: $greyColor;
+      font-family: inherit;
+      font-weight: inherit;
+      font-size: inherit;
+      line-height: inherit;
+    }
+
+    &:disabled {
+      background-color: $smokeWhiteColor;
+    }
+  }
+
+  .c-input-error {
+    border: 2px solid $errorColor;
+  }
+
+  p {
+    color: $errorColor;
+  }
+}
